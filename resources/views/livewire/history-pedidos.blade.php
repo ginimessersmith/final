@@ -1,4 +1,4 @@
-<div class="p-6 lg:p-8 bg-white border-b border-gray-200">
+{{-- <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
     <div class="flex justify-between">
         <h1 class="mt-3 text-2xl font-medium text-gray-900">
             Todos tus pedidos
@@ -9,7 +9,7 @@
         </div>
         @endif
     </div>
-
+!! bye
     <div class="flex flex-col">
 
         @forelse ($pedidos as $pedido)
@@ -36,5 +36,5 @@
         @endforelse
 
     </div>
-    {{-- Do your work, then step back. --}}
-</div>
+
+</div> --}}

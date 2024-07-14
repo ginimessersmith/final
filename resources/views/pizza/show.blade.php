@@ -47,7 +47,7 @@
                                 <x-label for="cantidad" value="{{ __('Cantidad') }}"/>
                                 <x-input type="number" name="cantidad" id="cantidad" min="1" value="1"/>
                                 <x-button>
-                                    Agregar al carrito LW
+                                    Agregar al carrito
                                 </x-button>
                             </form>
                         </div>

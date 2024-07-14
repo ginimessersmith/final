@@ -22,4 +22,12 @@ class SearchController extends Controller
 
         return view('search.index', compact('users', 'pizzas', 'categorias', 'tamanos','metodopagos', 'estados'));
     }
+
+    public function find(Request $request)
+    {
+        $search = $request->input('search');
+        $results = Pizza::where('nombre', 'LIKE', "%{$search}%")->get(); // Ajusta según tu lógica de búsqueda
+
+        return view('search.results', compact('results'));
+    }
 }

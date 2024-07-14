@@ -38,7 +38,7 @@
         @if($detalles != [])
         <div class="p-3">
             <button wire:click="checkout()" class="bg-green-800 p-2 text-white rounded-lg hover:bg-green-600">
-                Realizar pedido
+                Realizar pedido LIVEWIRE
             </button>
         </div>
         @endif

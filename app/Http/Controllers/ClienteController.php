@@ -14,10 +14,9 @@ class ClienteController extends Controller
      */
     public function index()
     {
+        $clientes = Cliente::paginate(10);
         $visits = Visit::where(['page_name' => 'clientes.index'])->first();
-        return view('cliente.index', [
-            'visits' => $visits
-        ]);
+        return view('cliente.index', compact('clientes', 'visits'));
     }
 
     /**
