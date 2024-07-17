@@ -12,26 +12,42 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    @if (auth()->user()->hasCliente())
+                    @if (auth()->user()->hasCliente() || auth()->user()->is_admin ||  auth()->user()->is_cajero )
                     <x-nav-link href="{{ route('pizzas.index') }}" :active="request()->routeIs('pizzas.index')">
                         {{ __('Menú') }}
                     </x-nav-link>
+                    @endif
+
+                    @if (auth()->user()->hasCliente() ||  auth()->user()->is_cajero)
                     <x-nav-link href="{{ route('detalle_pedido.index') }}" :active="request()->routeIs('detalle_pedido.index')">
                         {{ __('Carrito de compras') }}
                     </x-nav-link>
+                    @endif
+
+
+                    @if (auth()->user()->is_admin ||  auth()->user()->is_cajero)
                     <x-nav-link href="{{ route('pedidos.index') }}" :active="request()->routeIs('pedidos.index')">
                         {{ __('Historial de pedidos') }}
                     </x-nav-link>
                     @endif
-                    @if (auth()->user()->is_admin)
+
+                    @if (auth()->user()->is_cliente)
+                    <x-nav-link href="{{ route('pedidos.pedido_cliente') }}" :active="request()->routeIs('pedidos.pedido_cliente')">
+                        {{ __('Tus pedidos') }}
+                    </x-nav-link>
+                    @endif
+
+
+                    @if (auth()->user()->is_admin )
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('clientes.index') }}" :active="request()->routeIs('clientes.index')">
                         {{ __('Clientes') }}
                     </x-nav-link>
-
-                    <!-- Formulario de Búsqueda -->
+                    @endif
+                    @if (auth()->user()->is_admin || auth()->user()->is_cajero || auth()->user()->is_cliente)
+                        <!-- Formulario de Búsqueda -->
                     <form action="{{ route('search.index') }}" method="GET" class="m-3 flex">
                         <x-input id="search" class="block w-full h-full" type="text" name="search" :value="old('search')" placeholder="Busqueda general" />
                         <x-button>

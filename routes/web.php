@@ -8,6 +8,9 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetallePedidoController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\DetallePedidoCajeroController;
+use App\Http\Controllers\PedidoCajeroController;
+use App\Models\PedidoCajero;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +102,10 @@ Route::get('/pedidos', [PedidoController::class, 'index'])
     ->name('pedidos.index')
     ->middleware('auth', 'visits');
 
+Route::get('/pedidos_cliente', [PedidoController::class, 'myOrders'])
+    ->name('pedidos.pedido_cliente')
+    ->middleware('auth', 'visits');
+
 
 Route::put('/pedidos/{id}/markAsSent', [PedidoController::class, 'markAsSent'])
     ->name('pedidos.markAsSent')
@@ -109,3 +116,41 @@ Route::get('/pedidos/historial', [PedidoController::class, 'history'])
     ->middleware('auth');
 
 Route::get('/search', [SearchController::class, 'find'])->name('search.index');
+//!----------------------------------------------------------------------------------------
+// Route::get('/carrito_cajero', [DetallePedidoCajeroController::class, 'index'])
+//     ->name('detalle_pedido_cajero.index')
+//     ->middleware('auth');
+
+// Route::delete('/carrito/{id}', [DetallePedidoController::class, 'delete'])
+//     ->name('detalle_pedido_cajero.delete')
+//     ->middleware('auth');
+
+// Route::post('/carrito/checkout', [DetallePedidoController::class, 'checkout'])
+//     ->name('detalle_pedido_cajero.checkout')
+//     ->middleware('auth');
+
+
+// Route::get('/cajero/view', [PedidoCajeroController::class, 'index'])
+//     ->name('cajero.index')
+//     ->middleware('auth');
+
+// Route::post('/api/callback', [PedidoCajeroController::class, 'callback'])
+//     ->name('callback');
+
+
+// Route::get('/pedidos_cajero', [PedidoCajeroController::class, 'index'])
+//     ->name('pedidos_cajero.index')
+//     ->middleware('auth', 'visits');
+
+// Route::get('/pedidos_cliente_cajero', [PedidoCajeroController::class, 'myOrders'])
+//     ->name('pedidos_cajero.myOrders')
+//     ->middleware('auth', 'visits');
+
+
+// Route::put('/pedidos_cajero/{id}/markAsSent', [PedidoCajeroController::class, 'markAsSent'])
+//     ->name('pedidos_cajero.markAsSent')
+//     ->middleware('auth');
+
+// Route::get('/pedidos_cajero/historial', [PedidoCajeroController::class, 'history'])
+//     ->name('pedidos_cajero.history')
+//     ->middleware('auth');

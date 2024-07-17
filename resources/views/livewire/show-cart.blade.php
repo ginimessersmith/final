@@ -1,8 +1,8 @@
-<div class="p-6 lg:p-8 bg-white border-b border-gray-200">
+{{-- <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
     <div class="bg-gray-200 rounded-lg">
         <table class="w-full">
             <thead>
-                <tr>
+!!bye                <tr>
                     <th class="px-3 py-3 ">Pizza</th>
                     <th class="px-3 py-3 ">Cantidad</th>
                     <th class="px-3 py-3 ">Precio Unitario</th>
@@ -48,4 +48,4 @@
         <img src="{{$QR}}" alt="">
     </div>
     @endif
-</div>
+</div> --}}

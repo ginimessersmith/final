@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Todos los pedidos') }}
+            {{ __('Historial de pedidos') }}
         </h2>
     </x-slot>
 
@@ -31,10 +31,10 @@
                             <div class="border rounded-lg p-2">
                                 <p class="text-xl font-bold mt-5">Pedido #{{ $pedido->id }}</p>
                                 <p class="px-3"><span class="font-bold">Cliente:</span> {{ $pedido->cliente->user->name }}</p>
-                                <p class="px-3"><span class="font-bold">Estado del pago:</span> {{ $pedido->pagoestado->nombre }}</p>
-                                <p class="px-3"><span class="font-bold">Estado pedido:</span> {{ $pedido->estado->nombre }}</p>
+                                <p class="px-3"><span class="font-bold">Estado del pago:</span> {{ $pedido->pagoestado->nombre ?? 'No disponible' }}</p>
+                                <p class="px-3"><span class="font-bold">Estado pedido:</span> {{ $pedido->estado->nombre ?? 'No disponible' }}</p>
                                 <p class="px-3"><span class="font-bold">Total:</span> {{ $pedido->total }} Bs.</p>
-                                <p class="px-3"><span class="font-bold">Método de pago:</span> {{ $pedido->metodoPago->nombre }} Bs.</p>
+                                <p class="px-3"><span class="font-bold">Método de pago:</span> {{ $pedido->metodoPago->nombre ?? 'No disponible' }}</p>
                                 <p class="px-3 lowercase flex flex-col">
                                     <span class="font-bold capitalize">Descripción: </span>
                                     @foreach ($pedido->detalles as $detalle)
@@ -46,11 +46,13 @@
                                 </p>
                             </div>
                         @empty
-                            <p class="p-2 bg-green-700 text-white text-sm rounded-lg">No hay pedidos disponibles</p>
+                            <p class="p-2 bg-green-700 text-white text-sm rounded-lg">Aun no hay pedidos</p>
                         @endforelse
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <x-visits> {{ $visits->cant }} </x-visits>
 </x-app-layout>

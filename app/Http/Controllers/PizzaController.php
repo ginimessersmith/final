@@ -127,6 +127,18 @@ class PizzaController extends Controller
         $pizza = Pizza::find($id);
         $cantidad = $request->input('cantidad', 1);
 
+        // if(auth()->user()->id_cajero){
+
+        //     $pedido = Pedido::create([
+        //         'cliente_id' => auth()->user()->cliente->id,
+        //         'estado_id' => 1,
+        //         'nombre'=>'',
+        //         'total' => 0,
+        //         'metodo_pago_id' => 4,
+        //         'pago_estados_id' => 1,
+        //     ]);
+        // }
+
         if(auth()->user()->cliente->hasCarrito()){
             $pedido = auth()->user()->cliente->hasCarrito();
         } else {

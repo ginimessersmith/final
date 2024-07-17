@@ -18,7 +18,9 @@ class AdminSeeder extends Seeder
             'name' => 'Gino Baptista Gonzales',
             'email' => 'gino@gmail.com',
             'password' => bcrypt('12345678'),
-            'is_admin' => true
+            'is_admin' => true,
+            'is_cajero' => false,
+            'is_cliente' => false
         ]);
 
         Cliente::create([
@@ -32,14 +34,18 @@ class AdminSeeder extends Seeder
             'name' => 'Jorge Ballivian Ocampo',
             'email' => 'jorge@gmail.com',
             'password' => bcrypt('12345678'),
-            'is_admin' => true
+            'is_admin' => true,
+            'is_cajero' => false,
+            'is_cliente' => false
         ]);
 
         User::create([
             'name' => 'Carlos Laime',
             'email' => 'carlos@gmail.com',
             'password' => bcrypt('12345678'),
-            'is_admin' => true
+            'is_admin' => true,
+            'is_cajero' => false,
+            'is_cliente' => false
         ]);
     }
 }

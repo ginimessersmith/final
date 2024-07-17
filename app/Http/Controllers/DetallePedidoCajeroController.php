@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pedido;
-use App\Models\DetallePedido;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Models\PedidoCajero;
+use App\Models\DetallePedidoCajero;
+use GuzzleHttp\Client;
 
-class DetallePedidoController extends Controller
+
+class DetallePedidoCajeroController extends Controller
 {
+    //
     public function index()
     {
-        $pedido = Pedido::where('cliente_id', auth()->user()->cliente->id)->where('estado_id', 1)->first();
+        $pedido = PedidoCajero::where('users_is', auth()->user()->id)->where('estado_id', 1)->first();
         if ($pedido) {
-            $detalles = DetallePedido::where('pedido_id', $pedido->id)->get();
+            $detalles = DetallePedidoCajero::where('pedidos_cajeros_id', $pedido->id)->get();
             $total = $detalles->sum('subtotal');
         } else {
             $detalles = [];
             $total = 0;
         }
 
-        return view('detalle_pedido.index', [
+        return view('cajero.index', [
             'detalles' => $detalles,
             'total' => $total,
             'pedido' => $pedido,
@@ -29,8 +31,8 @@ class DetallePedidoController extends Controller
 
     public function delete($id)
     {
-        $detalle = DetallePedido::find($id);
-        $pedido = Pedido::find($detalle->pedido->id);
+        $detalle = DetallePedidoCajero::find($id);
+        $pedido = PedidoCajero::find($detalle->pedido->id);
         $pedido->total = $pedido->total - $detalle->subtotal;
 
         $detalle->delete();
@@ -41,12 +43,12 @@ class DetallePedidoController extends Controller
             $pedido->save();
         }
 
-        return redirect()->route('detalle_pedido.index')->with('success', 'Producto eliminado del carrito');
+        return redirect()->route('cajero.index')->with('success', 'Producto eliminado del carrito');
     }
 
     public function checkout(Request $request)
     {
-        $pedido = Pedido::find($request->pedido_id);
+        $pedido = PedidoCajero::find($request->pedido_id);
 
         $pedido->estado_id = 2;
         $pedido->save();
@@ -101,8 +103,8 @@ class DetallePedidoController extends Controller
         $pedido->pago_estados_id = 2;
         $pedido->save();
 
-        return view('detalle_pedido.index', [
-            'detalles' => DetallePedido::where('pedido_id', $pedido->id)->get(),
+        return view('cajero.index', [
+            'detalles' => DetallePedidoCajero::where('pedido_id', $pedido->id)->get(),
             'total' => $pedido->total,
             'pedido' => $pedido,
             'QR' => $QR,
