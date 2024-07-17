@@ -237,12 +237,19 @@
                     @endif --}}
                     @endif
                     @if (auth()->user()->is_admin)
+                    <x-nav-link href="{{ route('pizzas.index') }}" :active="request()->routeIs('pizzas.index')">
+                        {{ __('Menú') }}
+                    </x-nav-link>
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('clientes.index') }}" :active="request()->routeIs('clientes.index')">
                         {{ __('Clientes') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('pedidos.index') }}" :active="request()->routeIs('pedidos.index')">
+                        {{ __('Historial de pedidos') }}
+                    </x-nav-link>
+
 
                     <!-- Formulario de Búsqueda -->
                     <form action="{{ route('search.index') }}" method="GET" class="m-3 flex">
