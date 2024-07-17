@@ -39,7 +39,7 @@ class PedidoController extends Controller
     public function markAsSent($id)
     {
         $pedido = Pedido::find($id);
-        dd($pedido->estado_id);
+        // dd($pedido->estado_id);
         $pedido->estado_id = 3;
         $pedido->save();
 
