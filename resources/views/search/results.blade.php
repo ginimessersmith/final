@@ -9,9 +9,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @forelse ($results as $result)
-                    <div class="p-6 border-b border-gray-200">
-                        {{ $result->nombre }} <!-- Ajusta según tus datos -->
-                    </div>
+                    <p class=" pt-3 px-3 hover:text-xl font-bold">{{ $result->nombre }}</p>
+                    <p class=" px-3">Precio: {{ $result->precio }} Bs.</p>
+                    <p class="px-3 lowercase">Descripcion: {{ $result->descripcion }}</p>
+                    <br>
                 @empty
                     <p>No se encontraron resultados</p>
                 @endforelse

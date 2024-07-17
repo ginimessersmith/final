@@ -9,25 +9,31 @@ use App\Models\Categoria;
 use App\Models\Estado;
 use App\Models\MetodoPago;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SearchController extends Controller
 {
-    public function index($query){
-        $users = User::where('name', 'like', '%'.$query.'%')->paginate(4);
-        $pizzas = Pizza::where('nombre', 'like', '%'.$query.'%')->paginate(4);
-        $categorias = Categoria::where('nombre', 'like', '%'.$query.'%')->paginate(4);
-        $tamanos = Tamano::where('nombre', 'like', '%'.$query.'%')->paginate(4);
-        $metodopagos = MetodoPago::where('nombre', 'like', '%'.$query.'%')->paginate(4);
-        $estados = Estado::where('nombre', 'like', '%'.$query.'%')->paginate(4);
+    public function index($query)
+    {
+        $users = User::where('name', 'like', '%' . $query . '%')->paginate(4);
+        $pizzas = Pizza::where('nombre', 'like', '%' . $query . '%')->paginate(4);
+        $categorias = Categoria::where('nombre', 'like', '%' . $query . '%')->paginate(4);
+        $tamanos = Tamano::where('nombre', 'like', '%' . $query . '%')->paginate(4);
+        $metodopagos = MetodoPago::where('nombre', 'like', '%' . $query . '%')->paginate(4);
+        $estados = Estado::where('nombre', 'like', '%' . $query . '%')->paginate(4);
 
-        return view('search.index', compact('users', 'pizzas', 'categorias', 'tamanos','metodopagos', 'estados'));
+        return view('search.index', compact('users', 'pizzas', 'categorias', 'tamanos', 'metodopagos', 'estados'));
     }
 
     public function find(Request $request)
     {
-        $search = $request->input('search');
-        $results = Pizza::where('nombre', 'LIKE', "%{$search}%")->get(); // Ajusta según tu lógica de búsqueda
 
+        $search = $request->input('search');
+        $search = Str::lower($search);
+
+        $results = Pizza::whereRaw('LOWER(nombre) LIKE ?', ["%{$search}%"])
+            ->orWhereRaw('LOWER(descripcion) LIKE ?', ["%{$search}%"])
+            ->get();
         return view('search.results', compact('results'));
     }
 }
