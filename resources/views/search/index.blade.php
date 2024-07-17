@@ -63,7 +63,7 @@
                 <div class="bg-white m-2 rounded-lg flex border justify-between">
                     <div>
                         <p class=" pt-3 px-3 hover:text-xl font-bold">{{$categoria->nombre}}</p>
-                        <p class=" px-3">ID: {{$categoria->id}}</p>
+                        {{-- <p class=" px-3">ID: {{$categoria->id}}</p> --}}
                     </div>
                 </div>
                 @empty
@@ -86,7 +86,7 @@
                 <div class="bg-white m-2 rounded-lg flex border justify-between">
                     <div>
                         <p class=" pt-3 px-3 hover:text-xl font-bold">{{$tamano->nombre}}</p>
-                        <p class=" px-3">ID: {{$tamano->id}}</p>
+                        {{-- <p class=" px-3">ID: {{$tamano->id}}</p> --}}
                     </div>
                 </div>
                 @empty
@@ -109,7 +109,7 @@
                 <div class="bg-white m-2 rounded-lg flex border justify-between">
                     <div>
                         <p class=" pt-3 px-3 hover:text-xl font-bold">{{$metodopago->nombre}}</p>
-                        <p class=" px-3">ID: {{$metodopago->id}}</p>
+                        {{-- <p class=" px-3">ID: {{$metodopago->id}}</p> --}}
                     </div>
                 </div>
                 @empty
@@ -126,13 +126,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-b-lg">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight m-5">
-                    {{ __('Metodos de pago') }}
+                    {{ __('Estados') }}
                 </h2>
                 @forelse ($estados as $estado)
                 <div class="bg-white m-2 rounded-lg flex border justify-between">
                     <div>
                         <p class=" pt-3 px-3 hover:text-xl font-bold">{{$estado->nombre}}</p>
-                        <p class=" px-3">ID: {{$estado->id}}</p>
+                        {{-- <p class=" px-3">ID: {{$estado->id}}</p> --}}
                     </div>
                 </div>
                 @empty

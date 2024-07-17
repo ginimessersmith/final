@@ -13,18 +13,23 @@ use Illuminate\Support\Str;
 
 class SearchController extends Controller
 {
-    public function index($query)
+    public function index(Request $request)
     {
-        $users = User::where('name', 'like', '%' . $query . '%')->paginate(4);
-        $pizzas = Pizza::where('nombre', 'like', '%' . $query . '%')->paginate(4);
-        $categorias = Categoria::where('nombre', 'like', '%' . $query . '%')->paginate(4);
-        $tamanos = Tamano::where('nombre', 'like', '%' . $query . '%')->paginate(4);
-        $metodopagos = MetodoPago::where('nombre', 'like', '%' . $query . '%')->paginate(4);
-        $estados = Estado::where('nombre', 'like', '%' . $query . '%')->paginate(4);
+        $query = $request->input('search');
+        $query = Str::lower($query);
+
+        $users = User::whereRaw('LOWER(name) LIKE ?', ['%' . $query . '%'])->paginate(4);
+        $pizzas = Pizza::whereRaw('LOWER(nombre) LIKE ?', ['%' . $query . '%'])
+                       ->orWhereRaw('LOWER(descripcion) LIKE ?', ['%' . $query . '%'])
+                       ->paginate(4);
+
+        $categorias = Categoria::whereRaw('LOWER(nombre) LIKE ?', ['%' . $query . '%'])->paginate(4);
+        $tamanos = Tamano::whereRaw('LOWER(nombre) LIKE ?', ['%' . $query . '%'])->paginate(4);
+        $metodopagos = MetodoPago::whereRaw('LOWER(nombre) LIKE ?', ['%' . $query . '%'])->paginate(4);
+        $estados = Estado::whereRaw('LOWER(nombre) LIKE ?', ['%' . $query . '%'])->paginate(4);
 
         return view('search.index', compact('users', 'pizzas', 'categorias', 'tamanos', 'metodopagos', 'estados'));
     }
-
     public function find(Request $request)
     {
 

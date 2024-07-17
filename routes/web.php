@@ -115,7 +115,8 @@ Route::get('/pedidos/historial', [PedidoController::class, 'history'])
     ->name('pedidos.history')
     ->middleware('auth');
 
-Route::get('/search', [SearchController::class, 'find'])->name('search.index');
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::get('/search_results', [SearchController::class, 'find'])->name('search.results');
 //!----------------------------------------------------------------------------------------
 // Route::get('/carrito_cajero', [DetallePedidoCajeroController::class, 'index'])
 //     ->name('detalle_pedido_cajero.index')
