@@ -38,12 +38,14 @@
                                     {{ $pizza->descripcion }}
                                 </p>
 
+                                @if (!auth()->user()->is_admin)
                                 <a class="m-3 bg-red-800 hover:bg-red-700 p-5 inline-block rounded-lg" href="{{ route('pizzas.show', $pizza->id) }}" >
                                     <div class="flex justify-center">
                                         <p class="text-white">+</p>
                                         <x-car></x-car>
                                     </div>
                                 </a>
+                                @endif
 
                                 @if (auth()->user()->is_admin)
                                 <div class="flex justify-around m-3">
