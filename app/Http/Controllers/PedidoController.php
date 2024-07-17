@@ -13,7 +13,7 @@ class PedidoController extends Controller
         // return view('pedidos.index', compact('visits'));
 
         $pedidos = Pedido::where('estado_id', 2)->get();
-        return view('cajero.view', compact('pedidos'));
+        return view('pedidos.index', compact('pedidos'));
     }
 
     public function myOrders()
@@ -39,10 +39,11 @@ class PedidoController extends Controller
     public function markAsSent($id)
     {
         $pedido = Pedido::find($id);
+        dd($pedido->estado_id);
         $pedido->estado_id = 3;
         $pedido->save();
 
-        return redirect()->route('cajero.view')->with('alert', 'El pedido se ha enviado correctamente');
+        return redirect()->route('pedidos.index')->with('alert', 'El pedido se ha enviado correctamente');
     }
 
 }

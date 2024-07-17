@@ -21,15 +21,15 @@ class PizzaController extends Controller
         $categoria = $request->input('categoria');
         $tamano = $request->input('tamano');
 
-        $pizzas = Pizza::when($termino, function($query) use ($termino) {
-            $query->where('nombre', 'LIKE', '%'.Str::upper($termino).'%')
-                  ->orWhere('descripcion', 'LIKE', '%'.Str::upper($termino).'%');
-        })->when($categoria, function($query) use ($categoria) {
+        $pizzas = Pizza::when($termino, function ($query) use ($termino) {
+            $query->where('nombre', 'LIKE', '%' . Str::upper($termino) . '%')
+                ->orWhere('descripcion', 'LIKE', '%' . Str::upper($termino) . '%');
+        })->when($categoria, function ($query) use ($categoria) {
             $query->where('categoria_id', '=', $categoria);
-        })->when($tamano, function($query) use ($tamano) {
+        })->when($tamano, function ($query) use ($tamano) {
             $query->where('tamano_id', '=', $tamano);
         })
-        ->paginate(10);
+            ->paginate(10);
 
         $visits = Visit::where(['page_name' => 'pizzas.index'])->first();
         $categorias = Categoria::all(); // Agrega esto
@@ -100,7 +100,7 @@ class PizzaController extends Controller
 
         $pizza = Pizza::find($id);
 
-        if($request->hasFile('foto')) {
+        if ($request->hasFile('foto')) {
             $imagen_url = Cloudinary::upload($request->file('foto')->getRealPath())->getSecurePath();
             $pizza->imagen_url = $imagen_url;
         }
@@ -126,30 +126,33 @@ class PizzaController extends Controller
     {
         $pizza = Pizza::find($id);
         $cantidad = $request->input('cantidad', 1);
-
-        // if(auth()->user()->id_cajero){
-
-        //     $pedido = Pedido::create([
-        //         'cliente_id' => auth()->user()->cliente->id,
-        //         'estado_id' => 1,
-        //         'nombre'=>'',
-        //         'total' => 0,
-        //         'metodo_pago_id' => 4,
-        //         'pago_estados_id' => 1,
-        //     ]);
-        // }
-
-        if(auth()->user()->cliente->hasCarrito()){
-            $pedido = auth()->user()->cliente->hasCarrito();
-        } else {
+        $nombreCliente = $request->input('nombre', null);
+        // dd($nombreCliente);
+        if(auth()->user()->is_cajero){
             $pedido = Pedido::create([
-                'cliente_id' => auth()->user()->cliente->id,
+                'users_id' => auth()->user()->id,
                 'estado_id' => 1,
                 'total' => 0,
                 'metodo_pago_id' => 4,
                 'pago_estados_id' => 1,
+                'nombre'=>$nombreCliente
             ]);
+            // dd(auth()->user()->id,);
+        }else{
+            if (auth()->user()->cliente->hasCarrito()) {
+                $pedido = auth()->user()->cliente->hasCarrito();
+            } else {
+                $pedido = Pedido::create([
+                    'cliente_id' => auth()->user()->cliente->id,
+                    'estado_id' => 1,
+                    'total' => 0,
+                    'metodo_pago_id' => 4,
+                    'pago_estados_id' => 1,
+                ]);
+            }
         }
+
+
 
         $detalle = DetallePedido::create([
             'pedido_id' => $pedido->id,

@@ -42,14 +42,36 @@
                             </p>
 
                             {{-- formulario para cantidad de compra --}}
+                            {{-- <form action="{{ route('pizzas.addToCart', $pizza->id) }}" method="POST" class="px-3 mt-5">
+                                @csrf
+                                <x-label for="cantidad" value="{{ __('Cantidad') }}"/>
+                                <x-input type="number" name="cantidad" id="cantidad" min="1" value="1"  class="dark:bg-gray-900 dark:text-gray-200"/>
+
+                                @if (auth()->user()->is_cajero)
+                                <x-label for="nombre" value="{{ __('Nombre del Cliente') }}"/>
+                                <x-input type="text" name="nombre" id="nombre" min="1" value=""  class="dark:bg-gray-900 dark:text-gray-200"/>
+                                @endif
+
+                                <x-button>
+                                    Agregar al carrito
+                                </x-button>
+                            </form> --}}
                             <form action="{{ route('pizzas.addToCart', $pizza->id) }}" method="POST" class="px-3 mt-5">
                                 @csrf
                                 <x-label for="cantidad" value="{{ __('Cantidad') }}"/>
                                 <x-input type="number" name="cantidad" id="cantidad" min="1" value="1"  class="dark:bg-gray-900 dark:text-gray-200"/>
+
+                                {{-- Para el cajero --}}
+                                @if (auth()->user()->is_cajero)
+                                <x-label for="nombre" value="{{ __('Nombre del Cliente') }}"/>
+                                <x-input type="text" name="nombre" id="nombre" class="dark:bg-gray-900 dark:text-gray-200"/>
+                                @endif
+
                                 <x-button>
                                     Agregar al carrito
                                 </x-button>
                             </form>
+
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained();
+            $table->foreignId('cliente_id')->nullable()->constrained();
             $table->string('nombre')->nullable();
             $table->decimal('total', 8, 2);
             $table->timestamps();

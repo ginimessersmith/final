@@ -30,7 +30,7 @@
                         @forelse ($pedidos as $pedido)
                             <div class="border rounded-lg p-2">
                                 <p class="text-xl font-bold mt-5">Pedido #{{ $pedido->id }}</p>
-                                <p class="px-3"><span class="font-bold">Cliente:</span> {{ $pedido->cliente->user->name }}</p>
+                                <p class="px-3"><span class="font-bold">Cliente:</span> {{ $pedido->cliente->user->name ?? $pedido->nombre }}</p>
                                 <p class="px-3"><span class="font-bold">Estado del pago:</span> {{ $pedido->pagoestado->nombre }}</p>
                                 <p class="px-3"><span class="font-bold">Estado pedido:</span> {{ $pedido->estado->nombre }}</p>
                                 <p class="px-3"><span class="font-bold">Total:</span> {{ $pedido->total }} Bs.</p>
@@ -41,8 +41,16 @@
                                         <div class="flex justify-between w-1/2 mb-3">
                                             <p class="px-3"><span class="font-bold">Pizza:</span> {{ $detalle->pizza->nombre }}</p>
                                             <p class="px-3"><span class="font-bold">Cantidad:</span> {{ $detalle->cantidad }}</p>
+
                                         </div>
                                     @endforeach
+                                 <form action="{{ route('pedidos.markAsSent', $pedido->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        Marcar como enviado
+                                    </button>
+                                </form>
                                 </p>
                             </div>
                         @empty

@@ -115,6 +115,9 @@
             <x-responsive-nav-link href="{{ route('cajero.view') }}" :active="request()->routeIs('cajero.view')">
                 {{ __('Cajero') }}
             </x-responsive-nav-link>
+             <x-responsive-nav-link href="{{ route('pedidos.index') }}" :active="request()->routeIs('pedidos.index')">
+                {{ __('Historial de pedidos') }}
+            </x-responsive-nav-link>
             @endif
         </div>
 
@@ -208,9 +211,14 @@
                     <x-nav-link href="{{ route('detalle_pedido.index') }}" :active="request()->routeIs('detalle_pedido.index')">
                         {{ __('Carrito de compras') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('pedidos.index') }}" :active="request()->routeIs('pedidos.index')">
+                    <x-nav-link href="{{ route('pedidos.pedido_cliente') }}" :active="request()->routeIs('pedidos.pedido_cliente')">
                         {{ __('Historial de pedidos') }}
                     </x-nav-link>
+                    {{-- @if (auth()->user()->is_cliente)
+                    <x-nav-link href="{{ route('pedidos.pedido_cliente') }}" :active="request()->routeIs('pedidos.pedido_cliente')">
+                        {{ __('Tus pedidos') }}
+                    </x-nav-link>
+                    @endif --}}
                     @endif
                     @if (auth()->user()->is_admin)
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
@@ -231,9 +239,16 @@
                     </form>
                     @endif
                     @if (auth()->user()->is_cajero)
-                    <x-nav-link href="{{ route('cajero.view') }}" :active="request()->routeIs('cajero.view')">
-                        {{ __('Cajero') }}
+                    <x-nav-link href="{{ route('pizzas.index') }}" :active="request()->routeIs('pizzas.index')">
+                        {{ __('Menú') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('cajero.view') }}" :active="request()->routeIs('cajero.view')">
+                        {{ __('Pedidos') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('detalle_pedido.index') }}" :active="request()->routeIs('detalle_pedido.index')">
+                        {{ __('Carrito de compras') }}
+                    </x-nav-link>
+
                     @endif
                 </div>
             </div>

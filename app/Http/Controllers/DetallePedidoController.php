@@ -11,14 +11,32 @@ class DetallePedidoController extends Controller
 {
     public function index()
     {
-        $pedido = Pedido::where('cliente_id', auth()->user()->cliente->id)->where('estado_id', 1)->first();
+        $detalles = [];
+        $total = 0;
+        $pedido = null;
+
+        if (auth()->user()->cliente) {
+            $pedido = Pedido::where('cliente_id', auth()->user()->cliente->id)
+                ->where('estado_id', 1)
+                ->first();
+        }
+
         if ($pedido) {
             $detalles = DetallePedido::where('pedido_id', $pedido->id)->get();
             $total = $detalles->sum('subtotal');
         } else {
-            $detalles = [];
-            $total = 0;
+            $pedido = Pedido::where('users_id', auth()->user()->id)
+                ->where('estado_id', 1)
+                ->latest()
+                ->first();
+            // dd($pedido);
+            if ($pedido) {
+                $detalles = DetallePedido::where('pedido_id', $pedido->id)->get();
+                $total = $detalles->sum('subtotal');
+            }
         }
+
+        // dd(['detalles' => $detalles, 'pedido' => $pedido]);
 
         return view('detalle_pedido.index', [
             'detalles' => $detalles,
@@ -26,6 +44,7 @@ class DetallePedidoController extends Controller
             'pedido' => $pedido,
         ]);
     }
+
 
     public function delete($id)
     {
@@ -77,12 +96,12 @@ class DetallePedidoController extends Controller
             "tcTokenSecret"         => $tcTokenSecret,
             "tcCommerceID"          => $tcCommerceID,
             "tnMoneda"              => 2,
-            "tnTelefono"            => $pedido->cliente->numeroTelf,
-            "tcNombreUsuario"       => $pedido->cliente->user->name,
-            "tnCiNit"               => $pedido->cliente->ci_nit,
+            "tnTelefono"            => $pedido->cliente->numeroTelf ?? '00000000', // Valor por defecto si es null
+            "tcNombreUsuario"       => $pedido->cliente->user->name ?? $pedido->nombre, // Valor por defecto si es null
+            "tnCiNit"               => $pedido->cliente->ci_nit ?? '00000000', // Valor por defecto si es null
             "tcNroPago"             => "pago " . rand(1000, 9999),
-            "tnMontoClienteEmpresa" => $pedido->total,
-            "tcCorreo"              => $pedido->cliente->user->email,
+            "tnMontoClienteEmpresa" => $pedido->total ?? 0, // Valor por defecto si es null
+            "tcCorreo"              => $pedido->cliente->user->email ?? 'correo@desconocido.com', // Valor por defecto si es null
             "tcUrlCallBack"         => $tcUrlCallBack,
             "tcUrlReturn"           => $tcUrlReturn,
             "taPedidoDetalle"       => $taPedidoDetalle

@@ -18,9 +18,12 @@
                     <h1 class="mt-3 text-2xl font-medium text-gray-900 dark:text-gray-200">
                         Menú de pizzas
                     </h1>
+                    @if (auth()->user()->is_admin)
                     <a class="m-5 p-2 bg-red-800 hover:bg-red-700 rounded-lg" href="{{ route('pizzas.create') }}">
                         <p class="text-white">+ Nueva pizza</p>
                     </a>
+                    @endif
+
                 </div>
 
                 <div class="flex flex-col lg:grid lg:grid-cols-2 lg:grid-rows-5">

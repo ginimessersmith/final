@@ -107,7 +107,7 @@ Route::get('/pedidos_cliente', [PedidoController::class, 'myOrders'])
     ->middleware('auth', 'visits');
 
 
-Route::put('/pedidos/{id}/markAsSent', [PedidoController::class, 'markAsSent'])
+Route::patch('/pedidos/{id}/markAsSent', [PedidoController::class, 'markAsSent'])
     ->name('pedidos.markAsSent')
     ->middleware('auth');
 
