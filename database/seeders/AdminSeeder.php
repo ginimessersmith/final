@@ -23,13 +23,6 @@ class AdminSeeder extends Seeder
             'is_cliente' => false
         ]);
 
-        Cliente::create([
-            'ci_nit' => '9005925',
-            'user_id' => $gino->id,
-            'numeroTelf' => 65085392,
-            'direccion' => 'Av. Moscú Barrio Rivero, Calle Gaviota #18'
-        ]);
-
         User::create([
             'name' => 'Jorge Ballivian Ocampo',
             'email' => 'jorge@gmail.com',
